@@ -1,12 +1,18 @@
+"""
+This module runs all the different multiplexed qkd simulations.
+"""
+
 import simulations.single_state_information as single_state_information
 
 import os
+
 
 # Path for the data dir
 DATA_PATH = "data"
 
 # Path for the results dir
 RESULTS_PATH = 'results'
+
 
 if __name__ == "__main__":
 	single_state_information.simulate(

@@ -1,4 +1,5 @@
-"""This code calculates and plots the infromation transffered by a single
+"""
+This code calculates and plots the infromation transffered by a single
 quantum state measured in the correct basis in our protocol.
 
 This calculation is done under the two assumptions:
@@ -127,11 +128,14 @@ def simulate(data_path, save_path, reprocess=False):
                         recalculate the information if it was already
                         calculated before. Default as False.
     """
+    # Testing whether to run the simulation calculation.
     if not os.path.exists(data_path) or reprocess:
         calculate_simulation(data_path)
 
+    # Loading the simulation data.
     info_array = np.load(data_path)
 
+    # Plotting the simulation results.
     plt.figure()
     plt.imshow(info_array[::-1, :], extent=[0, 1, 0, 1], aspect="auto", 
                cmap='jet', interpolation='bilinear')
@@ -142,8 +146,8 @@ def simulate(data_path, save_path, reprocess=False):
     plt.title('Single Measurement Information', fontsize=30)
     plt.xticks(fontsize=16, rotation=0)
     plt.yticks(fontsize=16, rotation=0)
-
     fig = plt.gcf()
     fig.set_size_inches((11, 8.5), forward=False)
 
+    # Saving the figure to the given path.
     plt.savefig(save_path, dpi=500)
