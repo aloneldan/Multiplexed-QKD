@@ -47,20 +47,23 @@ def phase_measurement_probs(loss, alpha, zero_phase):
                         measure the 4 different cases: 
                         (signal, idler) = (1, 1), (1, 0), (0, 1) or (0, 0)
     """
-    # Calculating the transmission coefficient
+    # Calculating the transmission coefficient.
     trans = 1 - loss
-    # Calculating the unnormalized probabilities
+
+    # Calculating the unnormalized probabilities.
     p_1_1 = (trans + 1) ** 2 if zero_phase else (trans - 1) ** 2
     p_1_0 = loss * trans
     p_0_1 = loss * trans
     p_0_0 = (loss - (1/alpha)) ** 2
-    # Normalizing the probabilities
+
+    # Normalizing the probabilities.
     sum_p = p_1_1 + p_1_0 + p_0_1 + p_0_0
     p_1_1 /= sum_p
     p_1_0 /= sum_p
     p_0_1 /= sum_p
     p_0_0 /= sum_p
-    # Creating the final array
+
+    # Creating the final array.
     probs = np.array([p_1_1, p_1_0, p_0_1, p_0_0])
     return probs
 
@@ -77,14 +80,14 @@ def single_state_information(loss, alpha):
             Returns:
                     information (float): The calculated information (in bits).
     """
-    # The probabilities to measure each case in each transmission 
+    # The probabilities to measure each case in each transmission.
     z_measure_probs = P_ZERO*phase_measurement_probs(loss, alpha, zero_phase=True)
     pi_measure_probs = P_PI*phase_measurement_probs(loss, alpha, zero_phase=False)
 
-    # The total measurement probabilities
+    # The total measurement probabilities.
     measure_probs = z_measure_probs + pi_measure_probs
 
-    # The mutual information between the input and output of the channel
+    # The mutual information between the input and output of the channel.
     z_info = z_measure_probs * np.log2(z_measure_probs / (P_ZERO * measure_probs))
     pi_info = pi_measure_probs * np.log2(pi_measure_probs / (P_PI * measure_probs))
 
