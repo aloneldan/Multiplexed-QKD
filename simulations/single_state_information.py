@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-EPS = 1e-5
+EPS = 1e-10
 
 # Alice's transmission probabilities
 P_ZERO = 0.5
@@ -33,11 +33,12 @@ def phase_measurement_probs(loss, alpha, zero_phase):
     Calculates the probabilities to measure different cases for a given phase.
 
             Parameters:
-                    loss (float): A float between 0 and 1 represents the loss
-                        in the setup (the loss in the intensity).
-                    alpha (float): A float between 0 and 1 represents the 
+                    loss (float): A float between 0 and 1 representing the
+                        loss in the setup (the loss in the intensity).
+                    alpha (float): A float between 0 and 1 representing the
                         field squeezing.
-                    zero_phase (boolean) : A boolean represents Alice's phase.
+                    zero_phase (boolean) : A boolean representing Alice's
+                        phase.
                         zero_phase = True -> phase = 0
                         zero_phase = False -> phase = pi
             Returns:
@@ -67,9 +68,9 @@ def single_state_information(loss, alpha):
     Calculates the infromation transffered by a single quantum state.
 
             Parameters:
-                    loss (float): A float between 0 and 1 represents the loss
-                        in the setup (the loss in the intensity).
-                    alpha (float): A float between 0 and 1 represents the 
+                    loss (float): A float between 0 and 1 representing the
+                        loss in the setup (the loss in the intensity).
+                    alpha (float): A float between 0 and 1 representing the
                         field squeezing.
             Returns:
                     information (float): The calculated information (in bits).
