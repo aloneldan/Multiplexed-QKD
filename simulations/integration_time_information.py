@@ -14,7 +14,7 @@ This calculation is done under the three assumptions:
     photons since we are using a large number of quantum states.
 2. Randomaly Chosen Phase - we assume that Alice created the state with a
     random phase between 0, pi/2, pi and 3pi/2. Specifically, we assume that
-    in the correct basis (Without loss of generality, [0, pi]) the
+    in the correct basis (without loss of generality, [0, pi]) the
     probabilities are:
     >> P(phi = 0) = P(phi = pi) = 0.5 
     These probabilities are the standard probabilities for most QKD protocols.

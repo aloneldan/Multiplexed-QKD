@@ -70,7 +70,7 @@ def phase_measurement_probs(loss, alpha, zero_phase):
 
 def single_state_information(loss, alpha):
     """
-    Calculates the infromation transffered by a single quantum state.
+    Calculates the information transffered by a single quantum state.
 
             Parameters:
                     loss (float): A float between 0 and 1 representing the
