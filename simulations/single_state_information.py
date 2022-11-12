@@ -28,6 +28,7 @@ EPS = 1e-10
 P_ZERO = 0.5
 P_PI = 1 - P_ZERO
 
+
 def phase_measurement_probs(loss, alpha, zero_phase):
     """
     Calculates the probabilities to measure different cases for a given phase.
@@ -63,6 +64,7 @@ def phase_measurement_probs(loss, alpha, zero_phase):
     probs = np.array([p_1_1, p_1_0, p_0_1, p_0_0])
     return probs
 
+
 def single_state_information(loss, alpha):
     """
     Calculates the infromation transffered by a single quantum state.
@@ -90,6 +92,7 @@ def single_state_information(loss, alpha):
     
     return information
 
+
 def calculate_simulation(data_path, loss_samples=25, alpha_samples=25):
     """
     Calculates the single states information for multiple losses and gains.
@@ -115,6 +118,7 @@ def calculate_simulation(data_path, loss_samples=25, alpha_samples=25):
 
     # Saves the calculations.
     np.save(data_path, info_array)
+
 
 def simulate(data_path, save_path, reprocess=False):
     """
