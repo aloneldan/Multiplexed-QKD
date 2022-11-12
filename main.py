@@ -4,6 +4,7 @@ This module runs all the different multiplexed qkd simulations.
 
 import simulations.single_state_information as single_state_info
 import simulations.integration_time_information as integration_time_info
+import simulations.intercept_resend_information as intercept_resend_info
 
 import os
 
@@ -22,3 +23,6 @@ if __name__ == "__main__":
 	integration_time_info.simulate(
 		data_path=os.path.join(DATA_PATH, 'integration_time_info.npy'), 
 		save_path=os.path.join(RESULTS_PATH, 'integration_time_info.png'))
+	intercept_resend_info.simulate(
+		data_path=os.path.join(DATA_PATH, 'intercept_resend_info.npy'), 
+		save_path=os.path.join(RESULTS_PATH, 'intercept_resend_info.png'))
