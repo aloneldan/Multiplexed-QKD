@@ -26,7 +26,7 @@ EPS = 1e-10
 
 # Alice's transmission probabilities
 P_ZERO = 0.5
-P_PI = 0.5
+P_PI = 1 - P_ZERO
 
 def phase_measurement_probs(loss, alpha, zero_phase):
     """
