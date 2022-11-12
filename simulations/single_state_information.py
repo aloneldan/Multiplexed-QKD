@@ -18,8 +18,7 @@ This calculation is done under the two assumptions:
 import numpy as np
 import matplotlib.pyplot as plt
 
-from tqdm import tqdm
-
+import os
 
 
 EPS = 1e-5
@@ -27,10 +26,6 @@ EPS = 1e-5
 # Alice's transmission probabilities
 P_ZERO = 0.5
 P_PI = 0.5
-
-# The number of samples for the final plot
-LOSS_SAMPLES = 25
-ALPHA_SAMPLES = 25
 
 def phase_measurement_probs(loss, alpha, zero_phase):
     """
@@ -93,23 +88,62 @@ def single_state_information(loss, alpha):
     
     return information
 
-loss_array = np.linspace(EPS, 1-EPS, LOSS_SAMPLES)
-alpha_array = np.linspace(EPS, 1, ALPHA_SAMPLES) # Number of photons in a detection time
+def calculate_simulation(data_path, loss_samples=25, alpha_samples=25):
+    """
+    Calculates the single states information for multiple losses and gains.
+    The results are saved in the data dir for future uses.
 
-info_array = np.zeros((ALPHA_SAMPLES, LOSS_SAMPLES))
+            Parameters:
+                    data_path (str): The path to which the simulation data
+                        will be saved.
+                    loss_samples (int): The number of losses to calculate.
+                    alpha_samples (int): The number of gains to calculate.
+    """
+    # Initializing the calculation space.
+    loss_array = np.linspace(EPS, 1-EPS, loss_samples)
+    alpha_array = np.linspace(EPS, 1, alpha_samples)
 
-for loss_ind, loss in enumerate(tqdm(loss_array)):
-    for alpha_ind, alpha in enumerate(alpha_array):
-        info_array[alpha_ind, loss_ind] = single_state_information(loss, alpha)
+    # Initializing the results array.
+    info_array = np.zeros((alpha_samples, loss_samples))
 
-plt.ioff()
-plt.imshow(info_array[::-1, :], extent=[0, 1, 0, 1], aspect="auto", 
-           cmap='jet', interpolation='bilinear')
-cb = plt.colorbar()
-cb.ax.tick_params(labelsize=16)
-plt.xlabel('Loss', fontsize=24)
-plt.ylabel(r'$\alpha_{\omega}$', fontsize=24)
-plt.title('Single Measurement Information', fontsize=30)
-plt.xticks(fontsize=16, rotation=0)
-plt.yticks(fontsize=16, rotation=0)
-plt.show()
+    # Calculating the information over the calculation space.
+    for loss_ind, loss in enumerate(loss_array):
+        for alpha_ind, alpha in enumerate(alpha_array):
+            info_array[alpha_ind, loss_ind] = single_state_information(loss, alpha)
+
+    # Saves the calculations.
+    np.save(data_path, info_array)
+
+def simulate(data_path, save_path, reprocess=False):
+    """
+    Calculates the information and saves the results in the given path.
+
+            Parameters:
+                    data_path (str): The path in which the simulation data is
+                        saved.
+                    save_path (str): The path to which the final graph will be
+                        saved.
+                    reprocess (boolean): A boolean telling whether to
+                        recalculate the information if it was already
+                        calculated before. Default as False.
+    """
+    if not os.path.exists(data_path) or reprocess:
+        calculate_simulation(data_path)
+
+    info_array = np.load(data_path)
+
+    plt.figure()
+    plt.imshow(info_array[::-1, :], extent=[0, 1, 0, 1], aspect="auto", 
+               cmap='jet', interpolation='bilinear')
+    cb = plt.colorbar()
+    cb.ax.tick_params(labelsize=16)
+    plt.xlabel('Loss', fontsize=24)
+    plt.ylabel(r'$\alpha_{\omega}$', fontsize=24)
+    plt.title('Single Measurement Information', fontsize=30)
+    plt.xticks(fontsize=16, rotation=0)
+    plt.yticks(fontsize=16, rotation=0)
+
+    fig = plt.gcf()
+    fig.set_size_inches((11, 8.5), forward=False)
+
+    plt.savefig(save_path, dpi=500)
